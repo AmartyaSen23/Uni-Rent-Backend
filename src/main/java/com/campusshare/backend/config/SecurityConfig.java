@@ -24,6 +24,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll() // Your existing login access
                 .requestMatchers("/actuator/**").permitAll() // 🟢 ADD THIS LINE: Allow the Robot!
+                .requestMatchers(HttpMethod.GET, "/api/items/**").permitAll()
                 .anyRequest().authenticated() // Nobody can access the API unless they are logged in.
             );
         return http.build();
@@ -56,4 +57,5 @@ public class SecurityConfig {
         return source;
     }
 }
+
 
