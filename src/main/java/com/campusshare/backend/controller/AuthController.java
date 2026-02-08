@@ -46,9 +46,11 @@ public class AuthController {
 
     // 2. SIGNUP STEP 1: Send OTP (Smart Check)
     @PostMapping("/send-signup-otp")
-    public ResponseEntity<String> sendSignupOtp(@RequestBody String email) {
-        String cleanEmail = email.replace("\"", "").trim();
-
+    public ResponseEntity<String> sendSignupOtp(@RequestBody Map<String, String> payload) {
+        String cleanEmail = payload.get("email");
+        if (cleanEmail == null || cleanEmail.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email is required");
+        }
         User existingUser = userRepository.findByEmail(cleanEmail).orElse(null);
         
         // 🛑 SMART CHECK: Block ONLY if they have a REAL password
@@ -114,9 +116,12 @@ public class AuthController {
     static class RegisterRequest { public String email; public String otp; public String password; public String username; public String phoneNumber; }
     // 4. FORGOT PASSWORD STEP 1: Request OTP
     @PostMapping("/forgot-password-request")
-    public ResponseEntity<String> forgotPasswordRequest(@RequestBody String email) {
-        String cleanEmail = email.replace("\"", "").trim();
-        
+    public ResponseEntity<String> forgotPasswordRequest(@RequestBody Map<String, String> payload) {
+        // 2. Extract the email
+        String cleanEmail = payload.get("email");
+        if (cleanEmail == null || cleanEmail.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email is required");
+        }
         // 1. Check if user exists (Real user, not temp)
         User user = userRepository.findByEmail(cleanEmail).orElse(null);
         if (user == null) {
@@ -161,3 +166,4 @@ public class AuthController {
     static class ResetRequest { public String email; public String otp; public String newPassword; }
 
 }
+
