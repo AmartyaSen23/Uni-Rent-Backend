@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.security.web.SecurityFilterChain;
 import java.util.List;
 
 @Configuration
@@ -36,16 +35,15 @@ public class SecurityConfig {
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         
-        // Allow all origins (Frontend, Postman, Mobile)
-        config.setAllowedOriginPatterns(List.of("*")); 
+        // Explicitly tell Java to trust your Vercel Link
+        config.setAllowedOrigins(List.of(
+            "https://unirent-gray.vercel.app", 
+            "http://localhost:5500",
+            "http://127.0.0.1:5500"
+        ));
         
-        // Allow all headers (Authorization, Content-Type)
-        config.setAllowedHeaders(List.of("*"));
-        
-        // Allow all methods (GET, POST, PUT, DELETE, OPTIONS)
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        
-        // Allow credentials (needed for some browser requests)
+        config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
