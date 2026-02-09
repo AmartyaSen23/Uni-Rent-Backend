@@ -61,8 +61,6 @@ public class AuthController {
             }
             // If password IS "temp_pending", we allow them to proceed (Resend OTP logic)
         }
-
-        // Create temp user if not exists
         // Create temp user if not exists
         if (existingUser == null) {
             existingUser = new User();
@@ -70,7 +68,8 @@ public class AuthController {
             // 🟢 FIX: Fill required fields with DUMMY data to prevent DB crash
             existingUser.setPassword("PENDING_VERIFICATION"); 
             existingUser.setUsername("Guest_" + System.currentTimeMillis()); 
-            existingUser.setPhoneNumber("0000000000"); 
+            existingUser.setPhoneNumber("0000000000");
+            existingUser.setCreatedAt(LocalDateTime.now());
         }
 
         // Generate OTP
@@ -170,6 +169,7 @@ public class AuthController {
     static class ResetRequest { public String email; public String otp; public String newPassword; }
 
 }
+
 
 
 
