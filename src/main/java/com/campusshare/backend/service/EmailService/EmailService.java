@@ -12,6 +12,9 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Value("${spring.mail.username}")
+    private String senderEmail;
+
     public void sendOtpEmail(String toEmail, String otp) {
         SimpleMailMessage message = new SimpleMailMessage();
         
@@ -44,3 +47,4 @@ public class EmailService {
         System.out.println("🔥 Delete OTP Sent to " + toEmail);
     }
 }
+
