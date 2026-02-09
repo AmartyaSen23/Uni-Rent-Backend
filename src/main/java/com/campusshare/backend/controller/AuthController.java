@@ -88,7 +88,8 @@ public class AuthController {
             emailService.sendOtpEmail(cleanEmail, otp);
             return ResponseEntity.ok("OTP Sent to " + cleanEmail);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error sending email");
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Email Failed: " + e.getMessage());
         }
     }
     
@@ -169,6 +170,7 @@ public class AuthController {
     static class ResetRequest { public String email; public String otp; public String newPassword; }
 
 }
+
 
 
 
