@@ -23,11 +23,13 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Disable CSRF for external API calls
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // Your existing login access
-                .requestMatchers("/actuator/**").permitAll() // 🟢 ADD THIS LINE: Allow the Robot!
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                // 🟢 MOVE THIS TO THE TOP
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
+                
+                .requestMatchers("/api/auth/**").permitAll() 
+                .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/items/**").permitAll()
-                .anyRequest().authenticated() // Nobody can access the API unless they are logged in.
+                .anyRequest().authenticated()
             );
         return http.build();
     }
@@ -52,6 +54,7 @@ public class SecurityConfig {
         return source;
     }
 }
+
 
 
 
