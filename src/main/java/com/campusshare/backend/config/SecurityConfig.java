@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,9 +27,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Disable CSRF for external API calls
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            // 🔴 CHANGE 1: Disable internal CORS so the external Filter can handle it
+            .cors(AbstractHttpConfigurer::disable)
+            // 🔴 CHANGE 2: Standard way to disable CSRF
+            .csrf(AbstractHttpConfigurer::disable)
+            
             .authorizeHttpRequests(auth -> auth
+
                 // 🟢 MOVE THIS TO THE TOP
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
                 
