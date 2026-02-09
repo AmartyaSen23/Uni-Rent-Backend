@@ -77,7 +77,12 @@ public class AuthController {
         String otp = String.format("%06d", new Random().nextInt(999999));
         existingUser.setOtp(otp);
         existingUser.setOtpGeneratedTime(LocalDateTime.now());
-        userRepository.save(existingUser);
+        try {
+            userRepository.save(existingUser);
+        } catch (Exception e) {
+            e.printStackTrace(); // This prints the REAL error to Render logs
+            return ResponseEntity.status(500).body("DB Save Failed: " + e.getMessage());
+        }
 
         // Send Email
         try {
@@ -165,5 +170,6 @@ public class AuthController {
     static class ResetRequest { public String email; public String otp; public String newPassword; }
 
 }
+
 
 
