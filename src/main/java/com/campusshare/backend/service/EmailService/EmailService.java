@@ -12,28 +12,27 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${spring.mail.username}")
-    private String senderEmail;
+    private String fixedSenderEmail = "campusshare.project@gmail.com";
 
     public void sendOtpEmail(String toEmail, String otp) {
         SimpleMailMessage message = new SimpleMailMessage();
         
         // 🟢 USE THE VARIABLE, NOT HARDCODED STRING
-        message.setFrom(senderEmail); 
+        message.setFrom(fixedSenderEmail); 
         
         message.setTo(toEmail);
         message.setSubject("CampusShare Login OTP");
         message.setText("Hello Student,\n\nYour OTP for CampusShare login is: " + otp + "\n\nThis OTP is valid for 5 minutes.\n\n- CampusShare Team");
 
         mailSender.send(message);
-        System.out.println("📧 OTP Sent from " + senderEmail + " to " + toEmail);
+        System.out.println("📧 OTP Sent from " + fixedSenderEmail + " to " + toEmail);
     }
     // 🛑 DANGER EMAIL
     public void sendDeleteWarning(String toEmail, String otp) {
         SimpleMailMessage message = new SimpleMailMessage();
         
         // 🟢 USE THE VARIABLE HERE TOO
-        message.setFrom(senderEmail);
+        message.setFrom(fixedSenderEmail);
         
         message.setTo(toEmail);
         message.setSubject("⚠️ SECURITY WARNING: Account Deletion Request");
@@ -47,4 +46,5 @@ public class EmailService {
         System.out.println("🔥 Delete OTP Sent to " + toEmail);
     }
 }
+
 
