@@ -12,7 +12,6 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")
 public class AuthController {
     @Autowired
     private com.campusshare.backend.util.JwtUtil jwtUtil;
@@ -166,4 +165,5 @@ public class AuthController {
     static class ResetRequest { public String email; public String otp; public String newPassword; }
 
 }
+
 
