@@ -1,6 +1,7 @@
 package com.campusshare.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -13,18 +14,24 @@ public class EmailService {
 
     public void sendOtpEmail(String toEmail, String otp) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("campusshare.system@gmail.com"); // Your Gmail
+        
+        // 🟢 USE THE VARIABLE, NOT HARDCODED STRING
+        message.setFrom(senderEmail); 
+        
         message.setTo(toEmail);
         message.setSubject("CampusShare Login OTP");
         message.setText("Hello Student,\n\nYour OTP for CampusShare login is: " + otp + "\n\nThis OTP is valid for 5 minutes.\n\n- CampusShare Team");
 
         mailSender.send(message);
-        System.out.println("📧 OTP Sent to " + toEmail);
+        System.out.println("📧 OTP Sent from " + senderEmail + " to " + toEmail);
     }
     // 🛑 DANGER EMAIL
     public void sendDeleteWarning(String toEmail, String otp) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("campusshare.system@gmail.com");
+        
+        // 🟢 USE THE VARIABLE HERE TOO
+        message.setFrom(senderEmail);
+        
         message.setTo(toEmail);
         message.setSubject("⚠️ SECURITY WARNING: Account Deletion Request");
         message.setText("Hello,\n\nWe received a request to PERMANENTLY DELETE your CampusShare account.\n\n"
