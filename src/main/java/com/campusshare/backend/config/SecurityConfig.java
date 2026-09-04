@@ -58,7 +58,7 @@ public class SecurityConfig {
             "https://unirent-git-main-amartya-sens-projects-b10cf8e1.vercel.app",
             "https://unirent-p6gazn0tg-amartya-sens-projects-b10cf8e1.vercel.app",
             "https://unirent-22w7ctge4-amartya-sens-projects-b10cf8e1.vercel.app",
-            "https://unirent-p1ymon7y7-amartya-sens-projects-b10cf8e1.vercel.app"
+            "https://unirent-p1ymon7y7-amartya-sens-projects-b10cf8e1.vercel.app",
             "http://localhost:5500",
             "http://127.0.0.1:5500"
         ));
