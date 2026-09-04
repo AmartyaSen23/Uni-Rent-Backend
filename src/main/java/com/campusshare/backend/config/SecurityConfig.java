@@ -52,7 +52,15 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOriginPattern("*");
+        config.setAllowedOrigins(List.of(
+            "https://unirent-gray.vercel.app",
+            "https://unirent-amartya-sens-projects-b10cf8e1.vercel.app",
+            "https://unirent-git-main-amartya-sens-projects-b10cf8e1.vercel.app",
+            "https://unirent-p6gazn0tg-amartya-sens-projects-b10cf8e1.vercel.app",
+            "https://unirent-22w7ctge4-amartya-sens-projects-b10cf8e1.vercel.app",
+            "http://localhost:5500",
+            "http://127.0.0.1:5500"
+        ));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
@@ -70,7 +78,15 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         
         // Explicitly tell Java to trust your Vercel Link
-        config.setAllowedOriginPatterns(List.of("*"));
+        config.setAllowedOrigins(List.of(
+            "https://unirent-gray.vercel.app",
+            "https://unirent-amartya-sens-projects-b10cf8e1.vercel.app",
+            "https://unirent-git-main-amartya-sens-projects-b10cf8e1.vercel.app",
+            "https://unirent-p6gazn0tg-amartya-sens-projects-b10cf8e1.vercel.app",
+            "https://unirent-22w7ctge4-amartya-sens-projects-b10cf8e1.vercel.app",
+            "http://localhost:5500",
+            "http://127.0.0.1:5500"
+        ));
         
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
